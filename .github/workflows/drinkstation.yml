@@ -1,0 +1,27 @@
+name: Auto Commit Daily Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+
+jobs:
+  auto_commit_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} 
+      - name: Modify file
+        run: |
+          DATE=$(date +%Y-%m-%d_%H-%M-%S)
+          echo "Last updated: $DATE" > update.txt
+          echo "This file was automatically updated at $DATE" >> update.txt
+
+      - name: Auto commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "💖" || echo "No changes to commit"
+          git push
