@@ -2,7 +2,7 @@ name: Auto Commit Daily Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight UTC
+    - cron: '0 1/4 * * *' # Manual crontab.guru
 
 jobs:
   auto_commit_job:
@@ -20,8 +20,8 @@ jobs:
 
       - name: Auto commit changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "rama4zis@proton.me" 
+          git config user.name "rama4zis"
           git add .
           git commit -m "💖" || echo "No changes to commit"
           git push
